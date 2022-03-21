@@ -1,0 +1,38 @@
+---
+title: Linux Kurs
+subtitle: Blatt 2
+author: Konstantin Schneider
+date: 21.03.2022
+output:
+  prettydoc::html_pretty: default
+  rmarkdown::pdf_document: default
+---
+
+```{r echo=FALSE}
+
+knitr::opts_chunk$set(
+  eval = FALSE
+)
+
+```
+
+# Backup-Server
+Benennen Sie ein File um. Restaurieren Sie jetzt das Original-File vom Backup-Server – siehe Doku Wiederherstellung von Daten – graphisch.
+
+# Inkscape
+Malen Sie mit Inkscape ein (vereinfachtes) Blockdiagramm eines Regelkreises. 
+Orientieren Sie sich z.B. an einem Bild auf Wikipedia.
+
+# GIMP
+„Verschönern“ Sie mit `gimp` ein Foto Ihres Lieblingsprofessors. Suchen Sie auf YouTube ein Video mit einem kurzen Gimp-Tutorial.
+
+# qtiplot 
+Holen Sie sich experimentelle Messwerte von der Kurshomepage: http://www.physik.uni-regensburg.de/studium/it/linux/kurs/Data1.txt
+
+Der Datensatz besteht aus 3 Spalten. Plotten Sie Spalte 1 gegen Spalte 2 sowie Spalte 1 gegen 3 mithilfe von qtiplot. Finden Sie die Steigung des linearen Graphen heraus.
+
+# Thunderbird
+Richten Sie sich den Mozilla-Thunderbird ein gemäß den Angaben in der Vorlesung, mit IMAP zum Uni-Mailserver und ev. Kontakt zu weiteren Ihrer Mailboxen.
+
+# Archiv
+Erzeugen Sie ein tar-File aus dem Inhalt von /temp/Linux-Kurs/pdfs und packen Sie es. Wie viel Platzersparnis erreichen Sie? Anschließend entpacken Sie das erzeugte tar-Archiv in ein neues Verzeichnis innerhalb Ihres Homedirectories.

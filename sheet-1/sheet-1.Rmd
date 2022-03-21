@@ -1,0 +1,360 @@
+---
+title: Linux Kurs
+subtitle: Blatt 1
+author: Konstantin Schneider
+date: 21.03.2022
+output:
+  prettydoc::html_pretty: default
+  rmarkdown::pdf_document: default
+---
+
+```{r echo=FALSE}
+
+knitr::opts_chunk$set(
+  eval = FALSE
+)
+
+```
+
+# Im Linux-CIP-Pool einloggen.
+
+Loggen Sie sich im Linux-CIP-Pool ein mit Gnome Classic, und machen Sie sich ein wenig mit der Arbeitsumgebung vertraut.
+
+# Website beantragen
+
+- *Beantragen Sie für Aufgabe 11 eine persönliche Homepage.*
+
+Erledigt.
+
+# Herr Torvalds
+
+- *Wann/wie/wo stellte sich Linus Torvalds vor?*
+
+Torvalds verkuendete am 25. August 1991 in der Newsgroup comp.os.minix, er arbeite an einem freien Betriebssystem. (Quelle: https://de.wikipedia.org/wiki/Linus_Torvalds)
+
+# Debian 
+
+## Namesgebung
+
+*Woher stammen die Namen der Debian-Versionen?*
+
+Die Codenamen der Debian-Versionen stammt von Charakteren des Pixar Films Toy Story bzw. dessen Fortsetzungen.
+
+## Vor- und Nachteile von Debian
+
+*Was sind die Vorteile (und Nachteile) von Debian-Linux im Vergleich zu anderen Distributionen?*
+
+**Vorteile:**
+
+- Stabil und sicher
+- Langzeitsupport (LTS)
+- freie Software (free as in free speech)
+
+**Nachteile:**
+
+- freie Software: nicht-freie Software kann nicht ohne weiteres ueber den integrierten Paketmanager installiert werden.
+- Verfuegbare Pakete sind im Vergleich zu Distributionen mit Rolling-Release (z.B. Archlinux) oft veraltet.
+
+# Uebungsaufgaben mit der Konsole
+
+- *Erstellen Sie ein Verzeichnis linuxKurs.*
+
+```{bash}
+cd ~
+mkdir linuxKurs
+```
+
+- *Wechseln Sie in das neue Verzeichnis, und listen Sie den Inhalt.*
+
+```{bash}
+cd linuxKurs
+ls
+```
+
+- *Laden Sie mit dem Befehl `wget http://www.physik.ur.de/studium/it/linux/kurs/first_bash.sh` die Datei `first_bash.sh` herunter.*
+
+```{bash}
+wget http://www.physik.ur.de/studium/it/linux/kurs/first_bash.sh die Datei first_bash.sh
+```
+
+- *Lassen Sie sich die heruntergeladene Datei in der Konsole anzeigen.*
+
+```{bash}
+cat first_bash.sh
+```
+
+```{bash}
+#!/bin/bash
+echo "first bash gestartet" 
+
+for counter in $(seq 1 9);do
+		file_name="top_$counter.txt"
+		top -b | head -11 | tail -5 > $file_name
+		sleep 5
+	done 
+echo "Erfolgreich ausgeführt" > fs.log
+for l1 in $(seq 2 30); do 
+	echo "Zeile $l1" >> fs.log
+	done 
+echo "first bash beendet"
+```
+
+- *Lassen Sie sich die Rechte der Datei anzeigen. Passen Sie diese so an, dass Sie das
+Programm ausführen können.*
+
+```{bash}
+ls -l
+```
+
+```
+-rw-r----- 1 sck57752 stud 291 Okt 24  2018 first_bash.sh
+```
+
+```{bash}
+chmod +x first_bash.sh
+```
+
+```
+-rwxr-x--- 1 sck57752 stud 291 Oct 24  2018 first_bash.sh
+```
+
+- *Führen Sie die Datei aus. Was passiert?*
+
+```{bash}
+sh first_bash.sh
+```
+
+```
+first bash gestartet
+first bash beendet
+```
+
+- *Listen Sie nun nochmal den Inhalt des Verzeichnisses auf, dieses Mal mit zeitlicher
+Sortierung.*
+
+```{bash}
+ls -lt
+```
+
+```
+-rw-r----- 1 sck57752 stud 277 Mar 21 14:16 fs.log
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_9.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_8.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_7.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_6.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_5.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_4.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:16 top_3.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:15 top_2.txt
+-rw-r----- 1 sck57752 stud 345 Mar 21 14:15 top_1.txt
+-rw-r----- 1 sck57752 stud 291 Oct 24  2018 first_bash.sh
+```
+
+- *Lassen Sie sich von der Datei `fs.log` (i) die ersten 10 Zeilen, (ii) die letzten 10 Zeilen, (iii)
+und die mittleren 10 Zeilen ausgeben.*
+
+i) Die ersten 10 Zeilen:
+```{bash}
+head -10 fs.log
+```
+
+ii) Die letzten 10 Zeilen:
+```{bash}
+tail -10 fs.log
+```
+
+iii) Die mittleren 10 Zeilen:
+```{bash}
+cat fs.log | wc -l
+```
+
+```
+30
+```
+
+```{bash}
+sed -n 11,20p fs.log
+```
+
+- *Kopieren Sie `fs.log` in die Datei `backup.log`.*
+
+```{bash}
+cp fs.log backup.log
+```
+
+- *Löschen Sie die Datei `fs.log`.*
+
+```{bash}
+rm -f fs.log
+```
+
+- *Erzeugen Sie den Ordner Backup und verschieben Sie die Dateien
+`top_1.txt` - `top_9.txt` dorthin.*
+
+```{bash}
+mkdir Backup
+mv top* Backup/
+```
+
+- *Verwenden Sie die man-page, um herauszufinden, was die Option -A des Befehls ps -A bewirkt.*
+
+```{bash}
+man ps
+```
+
+```
+    -A     Select all processes. Identical to -e.
+```
+
+
+- *Speichern Sie die Ausgabe von `ps -A` in die Datei `prozesse.txt`.*
+
+```{bash}
+ps -A > prozesse.txt
+```
+
+- *Wechseln Sie in ihr home-Verzeichnis.*
+
+```{bash}
+cd ~
+```
+
+- *Finden Sie nur mithilfe der Konsole heraus, was der Befehl `ln` macht.*
+
+```{bash}
+man ln
+```
+
+`ln` erzeugt einen Symlink.
+
+- *Verwenden Sie ln, um auf die Datei `first_bash.sh` zu zeigen. Nennen Sie den Link
+`scriptLink`.*
+
+```{bash}
+ln -s linuxKurs/first_bash.sh scriptLink
+```
+
+- *Lassen Sie sich Ihr home-Verzeichnis anzeigen.*
+
+```{bash}
+ls -l
+```
+
+- *Führen Sie scriptLink aus. Was passiert?*
+
+```{bash}
+sh scriptLink
+```
+
+Das Skript spammt mir das Home-Verzeichnis voll.
+
+# Programme mit der Konsole
+
+- Starten Sie ein Programm (zum Beispiel gedit) mit der Konsole.
+
+```{bash}
+gedit
+```
+
+- *Schicken Sie das Programm in den Hintergrund.*
+
+`gedit` laesst sich mit `C-z` in den Hintergrund schicken. Das Programm wird dabei gestoppt.
+
+- *Holen Sie es zurück in den Vordergrund (geht das immer?).*
+
+```{bash}
+fg gedit
+```
+
+Das geht nur, solange nur ein Prozess mit dem Namen gedit laeuft. Ansonsten brauch man die Prozess-ID.
+
+- *Beenden Sie es mithilfe der Konsole.*
+
+Die Tastenkombination `C-c` beendet das Programm.
+
+- *Starten Sie das Programm nochmal mithilfe der Konsole, aber direkt im Hintergrund. Beenden sie dieses im Hintergrund laufende Programm in der Konsole mit `kill`.*
+
+```{bash}
+gedit &
+```
+
+```{bash}
+kill gedit
+```
+
+# Alias
+
+Erzeugen Sie sich einen Alias für lokales Backup gemäß dem Vorschlag aus der Vorlesung, also z.B.
+```
+alias s 'cp /home/abc12345/linkurs/myfile backup_`date | sed "s/\ /\_/g"`'
+```
+Sorgen Sie dafür, dass dieser Alias beim Öffnen eines Command-Windows automatisch verfügbar ist (Vorsicht! Unterschiedlich für `bash` und `tcsh`)
+
+```{bash}
+alias s='cp /home/sck57752/linuxKurs/prozesse.txt backup_`date | sed "s/\ /\_/g"`'
+```
+
+Um das Alias jeder neuen Session zur Verfuegung zu stellen, wird es der Datei `.bashrc` hinzugefuegt.
+
+```{bash}
+echo "alias s='cp /home/sck57752/linuxKurs/prozesse.txt backup_`date | sed "s/\ /\_/g"`'" >> ~/.bashrc 
+```
+
+# Root Filesystem
+
+- Wo befindet sich der Befehl chmod?
+
+```{bash}
+whereis chmod
+```
+
+```
+/usr/bin/chmod
+```
+
+- Wo ist ihr Arbeitsbereich eingehängt?
+
+```
+/home/sck5775/
+```
+
+- Wenn Sie einen USB-Stick anstecken, wo wird dieser im File-System eingehängt?
+
+```
+/media/usb[0-7]
+```
+
+# Persoenliche Website
+Ein File `index.html` in Ihrem Directory `/homepages/<IhrAccount>/public_html` ist weltweit abrufbar unter der URL https://homepages.uni-regensburg.de/~<IhrAccount>/index.html.
+Das Directory /homepages ist allerdings nicht direkt auf den PCs verfügbar – Sie müssen sich dazu auf der Maschine rex2 einloggen (`ssh rex2`). Erzeugen Sie hier eine persönliche kleine Homepage! Die Datei `index.html` gibt es i.d.R. bereits und hat die richtigen Rechte. Legen Sie ein neues Verzeichnis mit einer Datei an und setzten Sie die Rechte soweit nötig, so dass die Datei im Browser abrufbar ist - setzen Sie diese Rechte mit Facls. Erweitern Sie ihre Homepage, sodass mindestens eine Tabelle, ein Link zu einer Internetseite, und ein Link zu einer Datei vorhanden ist. Erste Infos zu html gibt‘s bei Wikipedia.
+
+```{html}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Konstantin Schneider</h1>
+
+<p>Diese Website wurde fuer den <a href="https://www.uni-regensburg.de/physik/fakultaet/studium/it-ausbildung/linux/index.html">Linux-Kurs</a> erstellt und bleibt erstmal so haesslich.</p>
+
+<h2>Eine Tabelle</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Spalte 1</th>
+    <th>Spalte 2</th>
+    <th>Spalte 3</th>
+  </tr>
+  <tr>
+    <td>Eintrag 1</td>
+    <td>Eintrag 2</td>
+    <td>Eintrag 3</td>
+  </tr>
+</table>
+
+</body>
+</html>
+```
+
+Die Website ist noch nicht erreichbar. Wie muessen die Rechte angepasst werden?
+

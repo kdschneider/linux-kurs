@@ -1,0 +1,97 @@
+---
+title: Linux Kurs
+subtitle: Blatt 3
+author: Konstantin Schneider
+date: 21.03.2022
+output:
+  prettydoc::html_pretty: default
+  rmarkdown::pdf_document: default
+---
+
+```{r echo=FALSE}
+
+knitr::opts_chunk$set(
+  eval = FALSE
+)
+
+```
+
+# Virtual Box einrichten
+
+1. Legen Sie sich auf der lokalen Platte des Rechners ein Verzeichnis an: 
+```
+mkdir /loctmp/Kurs−<Login−Name>
+chmod go−rwx /loctmp/Kurs−<Login−Name>
+```
+
+2. Stellen Sie fest, wie viel Platz auf der lokalen Platte frei ist (/loctmp). 25GB brauchen wir.
+```
+df -h /loctmp
+```
+
+3. Starten Sie VirtualBox: 
+```
+VirtualBox &
+```
+
+4. Setzten Sie das Arbeitsverzeichnis von VirtualBox auf die lokale Platte: 
+
+Datei → Einstellungen → Allgemein → Voreingestellter Pfad für VMs : /loctmp/Kurs-sck57752
+
+# Installation von Win10
+
+1. Importieren Sie eine Windows Appliance. Gemeint ist damit eine speziell für diesen Kurs hergerichtete Windows10-Installation, die nur vom Server geholt werden muss, bei der Sie aber keine Administrator-Rechte haben:
+
+- Datei → Appliance Importieren; Pfad der Appliance: /temp/Linux-Kurs/Linux-Kurs- Physik.ova; Rest Default.
+- Das kann ein paar Minuten dauern, bis ca. 7.5GB auf der lokalen Platte sind.
+- Wichtig: Überprüfen Sie nach der Installation die Einstellungen: ’Linux-Kurs-Physik2’ wählen, dann ’Ändern’, in der linken Spalte sehen Sie ’Allgemein’, ’System’, ’Anzeige’ etc. I.d.R. passt alles - beim Netzwerk-Adapter MUSS „(NAT)“ stehen!
+
+2. Starten Sie einmal Windows: 
+
+- Benutzer: Kurs 
+- Passwort: kurs 
+
+Anschließend Windows herunterfahren.
+
+3. Holen Sie jetzt das Installations-Image von Debian aus dem Internet und speichern Sie es unter /loctmp/Kurs-<Login-Name> (in Ihrem Homeverzeichnis ist evtl. nicht genug Platz):
+
+Debian ISO-CD (stable) - 64bit (amd64), Netzwerkinstallation
+
+4. Installieren Sie das Debian-Image auf der gleichen virtuellen Maschine. 
+
+Zu diesem Zweck „legen“ Sie das Image in das CD-Rom-Laufwerk der VM ein:
+   
+# Installation von Debian
+
+1. Starten Sie die Installation (am besten nicht graphisch)
+2. Vorhandene Windows-Partition verkleinern
+Partitionierung: manuell, NTFS verkleinern auf 30GB (Windows-Partition 85GB ntfs)
+3. Anschließende Linux-Partitionierung: 
+
+- /boot ext2, 256MB, primär (Boot-Flag nicht nötig)
+- swap 2GB, logisch
+- / ext4, 6GB, logisch
+- /usr ext4, 10GB, logisch
+- /home ext4, restliche Größe, logisch
+
+4. Spiegel-Server: Deutschland: ftp.de.debian.org, kein Proxy
+5. Software: Standard-Vorschläge sowie xfce (Xfce ist eine leichtgewichtige Arbeitsumgebung für UNIX-ähnliche Betriebssysteme. Ziel ist es, schnell und ressourcenschonend, aber auch optisch ansprechend und benutzerfreundlich zu sein.)
+
+# Wir haben Root-Rechte!
+
+a) Loggen Sie sich als normaler Benutzer ein und werden Sie in einem Terminal root (Befehl su) .
+
+b) Falls nötig: Kommentieren Sie in der Datei /etc/apt/sources.list die CD als Installations- quelle aus. Überprüfen Sie, ob es neue Updates gibt.
+(apt-get update, apt-get upgrade)
+
+c) Installieren Sie qtiplot (unter Debian 11 vermutlich noch nicht da) und auch gedit. Verwenden Sie dazu den Befehl
+apt-get install <Paketname>. Starten Sie die beiden Programme als normaler User.
+
+d) Zugriff auf die Windows-Partition:
+    1) Listen Sie als root die Partitionen der Festplatte auf (/usr/sbin/fdisk -l).
+    2) Legen Sie ein Verzeichnis /media/windows an
+    3) MountenSiedie(große)Windows-Partition(mount <Gerät> <Mountpoint>),undunmoun- ten Sie diese dann wieder.
+    4) Machen sie diesen Mount permanent (über Reboots hinweg). Dazu müssen Sie eine ent- sprechende Zeile in /etc/fstab anlegen. Machen Sie davor eine Sicherungskopie der Datei. (Filesystemtyp: ntfs-3g, options: defaults, dump: 0 , pass: 0)
+    Aktivieren Sie diese Zeile mit „mount -a“ (Mounte alles in /etc/fstab).
+
+e) Loggen Sie sich als root wieder aus (Befehl exit) .
