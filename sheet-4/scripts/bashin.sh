@@ -19,5 +19,12 @@ while true; do
   fi
 done
 
+echo
 printf "Sie haben folgende Namen eingegeben:\n"
-echo ${NAMES[*]}
+delim=""
+for i in "${NAMES[@]}"; do
+  printf "%s" "$delim$i"
+  delim=", "
+done
+echo
+

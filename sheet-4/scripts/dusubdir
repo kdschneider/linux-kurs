@@ -1,0 +1,7 @@
+#!bin/bash
+
+DIR=$1
+
+for i in $(find -s $DIR -type d -depth 1); do
+  du -hs $i
+done
