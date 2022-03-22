@@ -4,8 +4,8 @@ subtitle: Blatt 1
 author: Konstantin Schneider
 date: 21.03.2022
 output:
-  prettydoc::html_pretty: default
-  rmarkdown::pdf_document: default
+  rmarkdown::pdf_document:
+    highlight: tango
 ---
 
 ```{r echo=FALSE}
@@ -297,7 +297,8 @@ alias s='cp /home/sck57752/linuxKurs/prozesse.txt backup_`date | sed "s/\ /\_/g"
 Um das Alias jeder neuen Session zur Verfuegung zu stellen, wird es der Datei `.bashrc` hinzugefuegt.
 
 ```{bash}
-echo "alias s='cp /home/sck57752/linuxKurs/prozesse.txt backup_`date | sed "s/\ /\_/g"`'" >> ~/.bashrc 
+echo "alias s='cp /home/sck57752/linuxKurs/prozesse.txt backup_`date \
+  | sed "s/\ /\_/g"`'" >> ~/.bashrc 
 ```
 
 # Root Filesystem
@@ -328,33 +329,39 @@ whereis chmod
 Ein File `index.html` in Ihrem Directory `/homepages/<IhrAccount>/public_html` ist weltweit abrufbar unter der URL https://homepages.uni-regensburg.de/~<IhrAccount>/index.html.
 Das Directory /homepages ist allerdings nicht direkt auf den PCs verfügbar – Sie müssen sich dazu auf der Maschine rex2 einloggen (`ssh rex2`). Erzeugen Sie hier eine persönliche kleine Homepage! Die Datei `index.html` gibt es i.d.R. bereits und hat die richtigen Rechte. Legen Sie ein neues Verzeichnis mit einer Datei an und setzten Sie die Rechte soweit nötig, so dass die Datei im Browser abrufbar ist - setzen Sie diese Rechte mit Facls. Erweitern Sie ihre Homepage, sodass mindestens eine Tabelle, ein Link zu einer Internetseite, und ein Link zu einer Datei vorhanden ist. Erste Infos zu html gibt‘s bei Wikipedia.
 
-```{html}
+```{html eval=FALSE}
 <!DOCTYPE html>
 <html>
-<body>
+  <body>
 
-<h1>Konstantin Schneider</h1>
-
-<p>Diese Website wurde fuer den <a href="https://www.uni-regensburg.de/physik/fakultaet/studium/it-ausbildung/linux/index.html">Linux-Kurs</a> erstellt und bleibt erstmal so haesslich.</p>
-
-<h2>Eine Tabelle</h2>
-
-<table style="width:100%">
-  <tr>
-    <th>Spalte 1</th>
-    <th>Spalte 2</th>
-    <th>Spalte 3</th>
-  </tr>
-  <tr>
-    <td>Eintrag 1</td>
-    <td>Eintrag 2</td>
-    <td>Eintrag 3</td>
-  </tr>
-</table>
-
-</body>
+    <h1>Konstantin Schneider</h1>
+    
+    <p>
+      Diese Website wurde fuer den
+      <a href="https://uni-regensburg.de/physik/fakultaet/studium/it-ausbildung/linux/index.html">
+        Linux-Kurs
+      </a>
+      erstellt und bleibt erstmal so haesslich.
+    </p>
+    
+    <h2>Eine Tabelle</h2>
+    
+    <table>
+      <tr>
+        <th>Spalte 1</th>
+        <th>Spalte 2</th>
+        <th>Spalte 3</th>
+      </tr>
+      <tr>
+        <td>Eintrag 1</td>
+        <td>Eintrag 2</td>
+        <td>Eintrag 3</td>
+      </tr>
+    </table>
+    
+  </body>
 </html>
 ```
 
-Die Website ist noch nicht erreichbar. Wie muessen die Rechte angepasst werden?
+Die Website ist noch nicht erreichbar. Rechte sollten eigentlich stimmen.. 
 
