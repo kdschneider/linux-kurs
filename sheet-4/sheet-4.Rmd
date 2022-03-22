@@ -1,0 +1,50 @@
+---
+title: Linux Kurs
+subtitle: Blatt 3
+author: Konstantin Schneider
+date: 21.03.2022
+output:
+  rmarkdown::pdf_document:
+    highlight: tango 
+---
+
+  * [ ] bashfirst.sh
+  * [ ] bashin.sh
+  * [ ] dusubdir.sh
+  * [ ] makesoftlist
+
+# bashfirst.sh
+
+*Schreiben Sie ein bash-Skript `bashfirst.sh`, das als Parameter einen Filenamen erwartet. Als erstes soll überprüft werden, ob dieser Eintrag überhaupt existiert. Wenn nein, Abbruch mit Meldung. Wenn ja, Überprüfung, ob File oder Directory.*
+
+# bashin.sh
+
+*Schreiben Sie ein bash-Skript bashin.sh, das zwei Namen von der Konsole einliest und diese in einem Array speichert.
+Erweitern Sie ihr Programm dann so, dass solange Namen eingelesen werden können, bis der User `n` eingibt. Anschließend sollen alle Namen ausgegeben werden.*
+
+# dusubdir.sh
+
+*Sie wollen endlich mal Ihren Plattenspeicher ausmisten. Dazu hätten Sie ganz gerne eine Liste, die zu all Ihren Subdirectories die jeweilige Gesamt-Speicherbelegung ausgibt. Schreiben Sie ein bash-Skript dusubdir, das ein Startverzeichnis als Parameter erwartet. Wenn dieses nicht existiert, Abbruch, ansonsten Ausgabe wie z.B.:*
+```
+pc58643:~> dusubdir ~/Themen.Fritz
+1616 /home/wuf04055/Themen.Fritz/CKurs 
+13600 /home/wuf04055/Themen.Fritz/dbtrans 
+1136 /home/wuf04055/Themen.Fritz/demos.div
+```
+
+# makesoftlist
+
+*Sie haben komplett den Überblick verloren, welche Programme auf Ihrem Rechner in /usr/bin vorhanden sind. Es gibt hier zu sehr vielen Binaries eine man-page. man mit der Option -f oder auch whatis liefert einen ganz kurzen Text, der hier ausreicht, z.B.*
+```
+pc58643:~> man -f pdflatex
+pdflatex (1) - PDF output from TeX
+```
+*Erzeugen Sie also mit einem bash-Skript namens makesoftlist eine Liste aller Binaries aus /usr/bin mit entsprechender Kurzbeschreibung. Beispiele:*
+```
+lynx (1)- a general purpose distributed information browser . . . lyx (1) - A Document Processor
+lz (1) - gunzips and shows a listing of a gzip ’d tar ’d archive
+```
+Implementieren Sie zwei Besonderheiten:
+
+- **Pflicht:** *Da es in /usr/bin sehr, sehr viele Dateien gibt, geben Sie als ersten Parameter die Anzahl der Dateien an, die ausgewertet werden sollen, also z.B. makesoftlist 20 Default sei 10.*
+- **Kür:** *Wenn keine Manpage vorhanden ist, gibt der man-Befehl eine Fehlermeldung auf stderr aus. Fangen Sie diese Fehlermeldung ab und geben sie in Ihrer Liste eine eigene, kurze Anmerkung dazu aus.*
