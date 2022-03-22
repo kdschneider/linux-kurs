@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR="/usr/bin"
+MAX_ROWS="${1:-10}"
+
+k=0
+for i in $(find $DIR -mindepth 1 -maxdepth 1 -type f); do
+  man -f $i 2> /dev/null \
+	  || echo "<!!!> No manpages for $(basename $i) :( <!!!>"
+  ((k=k+1))
+  if [ $k -eq $MAX_ROWS ]; then
+	  break
+  fi
+done
