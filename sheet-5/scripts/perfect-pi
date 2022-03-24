@@ -1,0 +1,11 @@
+#!/usr/bin/awk -f
+BEGIN { 
+  print "Monte-Carlo estimation of pi with " ARGV[1] " random samples:"
+  for (counter = 1; counter <= ARGV[1]; counter++) {
+    x = rand()
+    y = rand()
+    if (x*x + y*y < 1) 
+      tr++
+  }
+  print "pi ≈ " 4*tr/ARGV[1]
+}

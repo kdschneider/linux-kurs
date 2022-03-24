@@ -1,0 +1,136 @@
+---
+title: Linus Kurs
+subtitle: Blatt 5
+author: Konstantin Schneider
+output:
+  rmarkdown::pdf_document:
+    toc: no
+    highlight: tango
+---
+
+```{r echo=FALSE}
+
+knitr::opts_chunk$set(
+  eval = FALSE
+)
+
+```
+
+# Schlüssel für Remote Login:
+*Richten Sie Schlüssel auf Ihrem Linux-CIP-Pool-PC ein, sodass Sie ohne dauerndes Eingeben des Passwortes Files mit der Maschine ch208 austauschen können. Nach dem Ausprobieren den Schlüssel unbedingt wieder löschen!*
+
+Klappt!
+
+# Regulaere Ausdruecke
+
+Geben Sie `echo "Linux ist schlecht" | sed "s/schlecht/gut/"` in der Konsole ein. Was passiert? Der Streaming-Editor `sed` verarbeitet reguläre Ausdrücke. Laden Sie zunächst die Datei stars (siehe Kurs-Homepage) herunter. Verwenden Sie sed, um dann folgende Aufgaben zu lösen:
+
+```
+System;Stern;Helligkeit(Scheinbar);Helligkeit(Absolut);Entfernung(LJ)
+Sonne;Sonne;-26,7;4.85;0.000016
+Alpha Centauri;Proxima Centauri;11.01;15.53;4.42
+Alpha Centauri;Alpha Centauri A;-0.01;4.38;4.36
+Sirius;Sirius A;-1.43;1.47;8.58
+Epsilon Eridani;Epsilon Eridani;3.5-4;6.19;10.52
+Prokyon;Prokyon A;0.38;2.66;11.40
+Prokyon;Prokyon B;10.7;12.98;11.40
+```
+
+a. Ersetzen Sie in jeder Zeile das erste Auftreten von „Alpha“ durch „A.“
+
+```{bash}
+cat stars | sed "s/Alpha/A/"
+```
+
+```
+System;Stern;Helligkeit(Scheinbar);Helligkeit(Absolut);Entfernung(LJ)
+Sonne;Sonne;-26,7;4.85;0.000016
+A Centauri;Proxima Centauri;11.01;15.53;4.42
+A Centauri;Alpha Centauri A;-0.01;4.38;4.36
+Sirius;Sirius A;-1.43;1.47;8.58
+Epsilon Eridani;Epsilon Eridani;3.5-4;6.19;10.52
+Prokyon;Prokyon A;0.38;2.66;11.40
+Prokyon;Prokyon B;10.7;12.98;11.40
+```
+
+b. Ersetzen Sie in jeder Zeile jedes Auftreten von „Alpha“ durch „A.“
+
+```{bash}
+cat stars | sed "s/Alpha/A/g"
+```
+
+```
+System;Stern;Helligkeit(Scheinbar);Helligkeit(Absolut);Entfernung(LJ)
+Sonne;Sonne;-26,7;4.85;0.000016
+A Centauri;Proxima Centauri;11.01;15.53;4.42
+A Centauri;A Centauri A;-0.01;4.38;4.36
+Sirius;Sirius A;-1.43;1.47;8.58
+Epsilon Eridani;Epsilon Eridani;3.5-4;6.19;10.52
+Prokyon;Prokyon A;0.38;2.66;11.40
+Prokyon;Prokyon B;10.7;12.98;11.40
+```
+
+c. Ersetzen Sie nur in der 4. Zeile jedes Auftreten von „Alpha“ durch „A.“
+
+```{bash}
+cat stars | sed "4s/Alpha/A/g"
+```
+
+```
+System;Stern;Helligkeit(Scheinbar);Helligkeit(Absolut);Entfernung(LJ)
+Sonne;Sonne;-26,7;4.85;0.000016
+Alpha Centauri;Proxima Centauri;11.01;15.53;4.42
+A Centauri;A Centauri A;-0.01;4.38;4.36
+Sirius;Sirius A;-1.43;1.47;8.58
+Epsilon Eridani;Epsilon Eridani;3.5-4;6.19;10.52
+Prokyon;Prokyon A;0.38;2.66;11.40
+Prokyon;Prokyon B;10.7;12.98;11.40
+```
+
+Was erhält man, wenn man die folgenden Sequenzen mit sed auf die Datei stars losläßt?
+Überlegen Sie zunächst, und verifizieren Sie Ihre Antwort mit
+```
+cat stars | sed -e "<sequenz>" 
+```
+d. `s/A//g` 
+
+Alle A's werden geloescht.
+
+e. `s/A//gI`
+
+Alle A's und a's werden geloescht.
+
+f. `s/^S*/test/g`
+
+Am Beginn jeder Zeile wird das Wort *test* eingefuegt. Falls die Zeile mit einem S beginnt, wird dieses ersetzt.
+
+Vergleichen Sie die Unterschiede von a, b, c sowie d, e. Woher kommen sie?
+
+# awk-Skript
+Nachdem Sie einige Features von awk aus der Vorlesung ausprobiert haben:
+
+a. Nehmen Sie den Datensatz aus `Data4.asc` (siehe Kurshomepage) und berechnen Sie mit einem einzeiligen awk-Befehl für jede Zeile den Mittelwert der drei Zahlen. Berechnen Sie auch die Gesamtsumme jeder einzelnen Spalte. Kommas müssen aber auf jeden Fall vorher zu Punkten werden...
+
+```{bash}
+cat Data4.asc \
+    | sed "s/,/./g" \
+    | awk '{for (i=1;i<=NF;i++){a[i]+=$i;}} END {for (i=1;i<=NF;i++){printf "%.4f", a[i]/NR; printf "\t"};printf "\n"}'
+```
+
+```
+15.2974	16.5421	1.1259
+```
+
+b. Anschließend etwas Schwereres (Spicken im Internet ist erlaubt und notwendig!): Schreiben Sie nun ein awk-Skript (kompakt geschrieben reichen 4 Zeilen), das:
+
+- von der Kommandozeile eine Ganzzahl wz einliest
+- eine Schleife von 1 bis wz abarbeitet
+- in dieser Schleife zwei Zufallszahlen x und y zwischen 0 und 1 holt 
+- einen Zähler tr um 1 erhöht, falls $x \cdot x + y \cdot y < 1$ ist
+- am Ende das Verhältnis 4*tr/wz ausgibt
+
+```{r}
+
+
+
+```
